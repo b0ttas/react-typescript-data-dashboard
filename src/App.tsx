@@ -1,23 +1,43 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './appstyle.scss';
 
 const App: React.FC = () => {
+  
+  function openNav() {
+    //document.getElementById("mySidenav").style.width = "250px";
+    //document.getElementById("main").style.marginLeft = "250px";
+    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+  }
+  
+  function closeNav() {
+    //document.getElementById("mySidenav").style.width = "0";
+    //document.getElementById("main").style.marginLeft= "0";
+    document.body.style.backgroundColor = "white";
+  }
+
   return (
+
     <div className="App">
+
+      <div className="topnav">
+        <a id="clickable" onClick={openNav}> <span>&#9776;</span> </a>
+        <a> logo here </a>
+        <a className="active" href="#areas">Áreas</a>
+      </div>
+
+      <div id="mySidenav" className="sidenav">
+        <a href="#" className="closebtn" onClick={closeNav}>&times;</a>
+        <a href="#areas">Áreas</a>
+        <a href="#sensores">Sensores</a>
+      </div>
+
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          In construction.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
       </header>
     </div>
   );
