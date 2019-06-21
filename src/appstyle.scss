@@ -1,67 +1,110 @@
 .topnav {
     background-color: #00C4B3;
+    height: 64px;
     overflow: hidden;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
   }
   
   .topnav a {
+    //position: absolute;
     float: left;
-    color: #f2f2f2;
+    color: #ffffff;
     text-align: center;
-    padding: 14px 16px;
+    padding: 20px 20px;
+    margin: 0px 5px 0px 10px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 20px;
+    font-style: normal;
+    //line-height: 32px;
+    align-items: center;
+    mix-blend-mode: normal;
+    //display: flex;
+    
   }
   
+  .topnav #add {
+    float: right;
+  }
+
+  .topnav span {
+    float: left;
+    color: #ffffff;
+    //padding: 15px 15px;
+    text-decoration: none;
+    font-size: 20px;
+    font-style: normal;
+    align-items: center;
+    mix-blend-mode: normal;
+    //display: flex;
+    display: block;
+    margin: 15px 0px 0px 25px;
+  }
+
+  .topnav #menu-span {
+    float: left;
+    color: #ffffff;
+    padding: 20px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    font-style: normal;
+    align-items: center;
+    mix-blend-mode: normal;
+    //display: flex;
+    display: block;
+    margin: 0px 0px 10px 0px;
+    cursor: pointer;
+  }
+  
+  #menu-span:hover {
+    background-color: #4C4C4C;
+  }
+
+  .topnav #add-img {
+    margin: 0px 13px;
+  }
+
   .topnav a:hover {
-    background-color: #ddd;
-    color: black;
+    background-color: #4C4C4C;
   }
+
   
-  .topnav a.active {
-    //background-color: #00C4B3;
-    color: white;
-  }
-
-  .span {
-    font-size:30px;
-  }
-
-  #clickable {
-    cursor:pointer;
+  #brand {
+    display: block;
+    padding-right: 25px;
   }
   
   .sidenav {
     height: 100%;
-    width: 0;
-    position: fixed;
+    width: 240px;
     z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 12px;
+    position: absolute;
+    background: #EEEEEE;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
   }
   
   .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 0px 8px 0px 0px;
     text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
+    color: #4C4C4C;
+    display: flex;
     transition: 0.3s;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 48px;
+    align-items: center;
+  }
+
+  .sidenav img {
+    margin: 0px 22px;
+    float: left;
   }
   
   .sidenav a:hover {
-    color: #f1f1f1;
-  }
-  
-  .sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+    background-color: #00C4B3;
   }
 
   .App {
@@ -75,14 +118,14 @@
   }
   
   .App-header {
-    background-color: #282c34;
+    background-color: #EEEEEE;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
-    color: white;
+    color: black;
   }
   
   .App-link {
