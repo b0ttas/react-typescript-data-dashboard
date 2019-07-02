@@ -1,0 +1,69 @@
+.sensor {
+    //position: relative;
+    width: 960px;
+    height: 88px;
+    margin-left: 280px;
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14);
+    border-radius: 2px;
+    margin-top: 16px;
+  }
+
+  .sensor #title {
+    padding: 24px 0px 0px 24px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    color: #4C4C4C;
+  }
+  
+  .sensor #content {
+    padding: 0px 24px 24px;
+    font-size: 12px;
+    line-height: 20px;
+
+    display: flex;
+    align-items: center;
+
+    color: #989898;
+  }
+
+  .sensor #options{
+    display: flex;
+    float: right;
+    margin-right: 88px;
+    margin-top: -50px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .sensor #edit{
+    margin-left: 72px;
+  }
+  .sensor #delete{
+    margin-left: 72px;
+  }
+
+  .sensor a{
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #00C4B3;
+  }
+  
+  .sensor a:hover {
+    text-decoration: underline;
+  }
+
+  .sensor #spacer {
+    margin-left: 623px;
+    display: flex;
+    margin-top: -88px;
+  }

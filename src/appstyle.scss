@@ -1,4 +1,5 @@
 .topnav {
+    position: static;
     background-color: #00C4B3;
     height: 64px;
     overflow: hidden;
@@ -6,7 +7,6 @@
   }
   
   .topnav a {
-    //position: absolute;
     float: left;
     color: #ffffff;
     text-align: center;
@@ -15,10 +15,8 @@
     text-decoration: none;
     font-size: 20px;
     font-style: normal;
-    //line-height: 32px;
     align-items: center;
     mix-blend-mode: normal;
-    //display: flex;
     
   }
   
@@ -29,14 +27,11 @@
   .topnav span {
     float: left;
     color: #ffffff;
-    //padding: 15px 15px;
     text-decoration: none;
     font-size: 20px;
     font-style: normal;
     align-items: center;
     mix-blend-mode: normal;
-    //display: flex;
-    display: block;
     margin: 15px 0px 0px 25px;
   }
 
@@ -49,14 +44,12 @@
     font-style: normal;
     align-items: center;
     mix-blend-mode: normal;
-    //display: flex;
-    display: block;
     margin: 0px 0px 10px 0px;
     cursor: pointer;
   }
   
   #menu-span:hover {
-    background-color: #4C4C4C;
+    background-color: rgb(0, 180, 165);
   }
 
   .topnav #add-img {
@@ -64,57 +57,17 @@
   }
 
   .topnav a:hover {
-    background-color: #4C4C4C;
+    background-color:rgb(0, 180, 165);
   }
 
   
   #brand {
-    display: block;
     padding-right: 25px;
   }
   
-  .sidenav {
-    height: 100%;
-    width: 240px;
-    z-index: 1;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 12px;
-    position: absolute;
-    background: #EEEEEE;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
-  }
-  
-  .sidenav a {
-    padding: 0px 8px 0px 0px;
-    text-decoration: none;
-    color: #4C4C4C;
-    display: flex;
-    transition: 0.3s;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 48px;
-    align-items: center;
-  }
-
-  .sidenav img {
-    margin: 0px 22px;
-    float: left;
-  }
-  
-  .sidenav a:hover {
-    background-color: #00C4B3;
-  }
 
   .App {
     text-align: center;
-  }
-  
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 40vmin;
-    pointer-events: none;
   }
   
   .App-header {
@@ -127,9 +80,10 @@
     font-size: calc(10px + 2vmin);
     color: black;
   }
-  
-  .App-link {
-    color: #61dafb;
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 40vmin;
+    pointer-events: none;
   }
   
   @keyframes App-logo-spin {
@@ -139,5 +93,19 @@
     to {
       transform: rotate(360deg);
     }
+  }
+  
+  .App-content {
+    position: absolute;
+    background-color: #EEEEEE;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+  }
+  
+  .App-link {
+    color: #61dafb;
   }
   

@@ -1,0 +1,37 @@
+
+.sidenav {
+  height: 100%; 
+  width: 240px; 
+  position: static;
+  z-index: 1;
+  top: 64px;
+  overflow-x: hidden;  
+  visibility: visible;
+  padding-top: 12px;
+  position: absolute;
+  background: #EEEEEE;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.sidenav a {
+  text-decoration: none;
+  color: #4C4C4C;
+  display: flex;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 48px;
+  align-items: center;
+}
+
+.sidenav a:hover {
+  background-color: rgb(215, 215, 215);
+  text-decoration: underline;
+}
+
+.sidenav img {
+  margin: 0px 22px;
+  float: left;
+}
+
+
