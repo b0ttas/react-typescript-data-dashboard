@@ -2,7 +2,6 @@ import * as React from 'react';
 import "./Sensor.scss";
 
 import ItemSpacer from '../resources/ItemSpacer.svg';
-import { render } from 'react-dom';
 
 interface Props {
     areaName?: string;

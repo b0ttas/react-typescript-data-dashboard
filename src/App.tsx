@@ -1,6 +1,10 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { SidebarComponent } from './components/Sidebar';
+import { AppContainer } from './components/AppContainer';
 
 import logo from './resources/logo.svg';
 import brand from './resources/brand.svg';
@@ -12,8 +16,7 @@ import sensor from './resources/sensor.svg';
 import AreaList from "./components/AreaList";
 import SensorList from "./components/SensorList";
 
-
-import './AppStyle.scss';
+//import './AppStyle.scss';
 import SensorForm from './components/SensorForm';
 import AreaForm from './components/AreaForm';
 
@@ -35,29 +38,22 @@ const sensors = [
 ];
 
 function TopNav() {
-    let addPath, addHref = null;
+    let addPath, currHref = null;
     let navTitle;
 
-    addHref = window.location.pathname.substring(1);
+    currHref = window.location.pathname.substring(1);
 
-    switch (addHref) {
+    switch (currHref) {
         case "areas":
-            navTitle = <a className="active" href={window.location.href} >Áreas</a>
-            addHref = window.location.pathname.substring(1) + "-add";
-            addPath = <a id="add" href={addHref}>Adicionar<img id="add-img" src={plus} className="App-plus" alt="plus" /></a>
+            navTitle = <Link to="/areas" className="active">Áreas</Link>
+            addPath = <Link to="/areas-add" id="add">Adicionar<img id="add-img" src={plus} className="App-plus" alt="plus" /></Link>
             break;
         case "sensores":
-            navTitle = <a className="active" href={window.location.href} >Sensores</a>;
-            addHref = window.location.pathname.substring(1) + "-add";
-            addPath = <a id="add" href={addHref}>Adicionar<img id="add-img" src={plus} className="App-plus" alt="plus" /></a>
+            navTitle = <Link to="/sensores" className="active">Sensores</Link>
             break;
         case "areas-add":
-            navTitle = <a className="active" href={window.location.href} >Áreas</a>;
-            addHref = "";
-            break;
-        case "sensores-add":
-            navTitle = <a className="active" href={window.location.href} >Sensores</a>;
-            addHref = "";
+            navTitle = <Link to="/areas" className="active">Áreas</Link>
+            currHref = "";
             break;
         default:
     }
@@ -76,50 +72,84 @@ const TopbarComponent: React.FunctionComponent = props => (
     </div>
 );
 
-function AppContent() {
+function Landing() {
+    return (
+        <div className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <p>This is the homepage, please navigate using the sidebar.</p>
+        </div>
+    );
+}
 
-    let currHref = null;
-    let appcontent;
-
-    currHref = window.location.pathname.substring(1);
-    console.log(currHref);
-
-    switch (currHref) {
-        case "":
-            appcontent = <div className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    This is the homepage, please navigate using the sidebar.
-      </p>
-            </div>;
-            break;
-        case "areas":
-            appcontent = <AreaList areas={areas} />;
-            break;
-        case "sensores":
-            appcontent = <SensorList sensors={sensors} />;
-            break;
-        case "areas-add":
-            appcontent = <AreaForm />
-            break;
-        case "sensores-add":
-            appcontent = <SensorForm />
-            break;
-        default:
-            appcontent = <div className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    [404] Page not found.
-      </p>
-            </div>;;
-    }
-
-
+function Areas() {
     return (
         <div className="App-content">
-            {appcontent}
+            <AreaList areas={areas} />
+        </div>
+    );
+}
+
+function AreasAdd() {
+    return (
+        <div className="App-content">
+            <AreaForm />
+        </div>
+    );
+}
+
+function Sensores() {
+    return (
+        <div className="App-content">
+            <SensorList sensors={sensors} />
+        </div>
+    );
+}
+
+function Page404() {
+    return (
+        <div className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <p>[404] Page not found.</p>
         </div>
     )
+}
+
+{/*missing route for sensor:id, area:id*/ }
+
+
+function DBread() {
+
+
+    let url = "http://localhost:3001/posts"
+    fetch(url)
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data);
+
+        })
+        return(
+            <div></div>
+        )
+}
+
+function APIreadDevices() {
+
+
+    let url = "https://api-device.agroop.net/devices"
+    fetch(url, {
+        method: "GET",
+        credentials: "include",
+        headers: {'Content-Type': 'application/json'}
+
+    })
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data);
+
+        })
+        return(
+            <div></div>
+        )
 }
 
 const App: React.FC = () => {
@@ -128,19 +158,34 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            <TopbarComponent>
-                <div className="topnav">
-                    <span onClick={() => setVisible(!isVisible)} id="menu-span">&#9776;</span>
-                    <a href="/" id="brand"><img src={brand} className="App-brand" alt="brand" /></a>
-                    <span><img src={spacer} alt="" /></span>
-                    <TopNav />
-                </div>
-            </TopbarComponent>
-            <SidebarComponent isVisible={isVisible}>
-                <a href="areas"><img src={area} alt="area" />Áreas</a>
-                <a href="sensores"><img src={sensor} alt="sensor" />Sensores</a>
-            </SidebarComponent>
-            <AppContent />
+            <Router>
+                <TopbarComponent>
+                    <div className="topnav">
+                        <span onClick={() => setVisible(!isVisible)} id="menu-span">&#9776;</span>
+                        <Link to="/" id="brand"><img src={brand} className="App-brand" alt="brand" /></Link>
+                        <span><img src={spacer} alt="" /></span>
+                        <TopNav />
+                    </div>
+                </TopbarComponent>
+                <SidebarComponent isVisible={isVisible}>
+                    <Link to="/areas"><img src={area} alt="area" />Áreas</Link>
+                    <Link to="/sensores"><img src={sensor} alt="sensor" />Sensores</Link>
+                </SidebarComponent>
+                <AppContainer isVisible={isVisible}>
+                   
+                    <APIreadDevices/>
+                    <Switch>
+                        <Route exact path="/" component={Landing} />
+                        <Route path="/areas" component={Areas} />
+                        <Route path="/areas/:id" component={Areas} />
+                        {/*not tested yet, AreaForm(area-add) element + id*/}
+                        <Route path="/areas-add" component={AreasAdd} />
+                        <Route path="/sensores" component={Sensores} />
+                        <Route path="/404" component={Page404} />
+                        <Redirect from="*" to="/404" />
+                    </Switch>
+                </AppContainer>
+            </Router>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import React, { AreaHTMLAttributes } from "react";
+import React from "react";
 
 import Area from "./Area"
 
