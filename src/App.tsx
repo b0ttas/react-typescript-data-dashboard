@@ -127,29 +127,9 @@ function DBread() {
             console.log(data);
 
         })
-        return(
-            <div></div>
-        )
-}
-
-function APIreadDevices() {
-
-
-    let url = "https://api-device.agroop.net/devices"
-    fetch(url, {
-        method: "GET",
-        credentials: "include",
-        headers: {'Content-Type': 'application/json'}
-
-    })
-        .then(resp => resp.json())
-        .then(data => {
-            console.log(data);
-
-        })
-        return(
-            <div></div>
-        )
+    return (
+        <div></div>
+    )
 }
 
 const App: React.FC = () => {
@@ -172,8 +152,6 @@ const App: React.FC = () => {
                     <Link to="/sensores"><img src={sensor} alt="sensor" />Sensores</Link>
                 </SidebarComponent>
                 <AppContainer isVisible={isVisible}>
-                   
-                    <APIreadDevices/>
                     <Switch>
                         <Route exact path="/" component={Landing} />
                         <Route path="/areas" component={Areas} />
