@@ -1,8 +1,17 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./AreaForm.scss";
+import { fetchDevices } from '../deviceAPI';
 
 
 function AreaForm() {
+    //Set devices initialy as an empty array
+    const [devices, setDevices] = useState([]);
+    //fetch the devices when the compnent mounts
+    useEffect(() => {
+        fetchDevices()
+            .then(setDevices)
+    }, [])
+
     return (
         <div className="areaform">
             <form>
@@ -22,11 +31,9 @@ function AreaForm() {
                         <div className="after"></div>
                     </fieldset>
                     <fieldset id="right">
-                        <select className="select_box" required>
-                            <option value="" disabled selected hidden>Sensor *</option>
-                            <option value="0">device2</option>
-                            <option value="1">device3</option>
-                            <option value="2">device4</option>
+                        <select className="select_box" required defaultValue="">
+                            <option value="" disabled hidden>Sensor *</option>
+                            {devices.map(d => (<option key={d} value={d}>{d}</option>))}
                         </select>
                         <div className="after"></div>
                     </fieldset>
