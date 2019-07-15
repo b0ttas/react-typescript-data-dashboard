@@ -1,21 +1,22 @@
-import React from "react";
-
+import React, { useEffect, useState } from 'react';
 import Sensor from "./Sensor"
 
-interface Props {
-    sensors: {
-        id: number;
-        areaName: string;
-        areaCulture: string;
-        deviceUID: string;
-    }[];
-}
+import { fetchDevices } from '../deviceAPI';
 
-function SensorList(props: Props) {
+function SensorList() {
+
+    //Set devices initialy as an empty array
+    const [devices, setDevices] = useState([]);
+    //fetch the devices when the compnent mounts
+    useEffect(() => {
+        fetchDevices()
+            .then(setDevices)
+    }, [])
+
 
     return (
         <div>
-            {props.sensors.map(s => <Sensor key={s.id} deviceUID={s.deviceUID} areaName={s.areaName} areaCulture={s.areaCulture} />)}
+            {devices.map(d =>  <Sensor key={d} deviceUID={d} />)}
         </div>);
 }
 

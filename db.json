@@ -1,12 +1,32 @@
 {
-    "posts": [
-      {
-        "title": "CopyRight Automatico",
-        "tags": "[JS]"
-      },
-      {
-        "title": "HtmlWebpackPlugin Multiples HTML files",
-        "tags": "[JS, webpack]"
-      }
-    ]
-  }
+  "areas": [
+    {
+      "id": 0,
+      "name": "Lorrie Sunders",
+      "crop": "Tic-Tacs",
+      "area": "1337",
+      "device": "ac160007-6894-1d8a-8168-94bdb30a003a"
+    },
+    {
+      "id": 1,
+      "name": "Ervin Bowel",
+      "crop": "Brocolis",
+      "area": 59,
+      "device": "ac160007-6894-1d8a-8168-94bdb30a003a"
+    },
+    {
+      "id": 2,
+      "name": "Benjamin Clementine",
+      "crop": "Bloody Beetroots",
+      "area": 666,
+      "device": "ac160007-6894-1d8a-8168-94bdb30a003a"
+    },
+    {
+      "id": 3,
+      "name": "Delicious Bloodpack",
+      "crop": "Bananen",
+      "area": 23,
+      "device": "ac160007-6894-1d8a-8168-94bdb30a003a"
+    }
+  ]
+}

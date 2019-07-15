@@ -4,8 +4,9 @@
     background: rgb(255, 255, 255);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14);
     border-radius: 2px;
-    margin-top: 16px;
     margin: auto;
+        margin-top: 16px;
+        margin-left: unset;
     text-align: unset;
     font-size:20px;
 
@@ -29,7 +30,7 @@
         fieldset {
             position: relative;
             border: none;  
-            display: inline;
+            display: flex;
             width: 400px;
         }
       
@@ -70,4 +71,31 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 10px;
+}
+
+#cancel {
+  margin-right: 20px;
+}
+
+#save {
+  border-radius: 2px;
+padding: 8px 20px;
+  background: #00C4B3;
+  color: #ffffff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.15), 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.options a{
+  font-size: 16px;
+  margin-right: 25px;
+  line-height: 20px;
+  text-decoration: none;
+  color: #00C4B3;
+  font-style: normal;
+  font-weight: normal;
+}
+
+#cancel:hover {
+    text-decoration: underline;
+  
 }
