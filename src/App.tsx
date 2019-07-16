@@ -14,6 +14,7 @@ import sensor from './resources/sensor.svg';
 
 import AreaList from "./components/AreaList";
 import SensorList from "./components/SensorList";
+import SensorView from "./components/SensorView";
 
 import './AppStyle.scss';
 import AddAreaForm from './components/AddAreaForm';
@@ -89,6 +90,12 @@ function Sensores() {
     );
 }
 
+function SensoresView() {
+    return (
+        <SensorView />
+    );
+}
+
 function Page404() {
     return (
         <div className="App-header">
@@ -125,7 +132,8 @@ const App: React.FC = () => {
                         <Route exact path="/areas" component={Areas} />
                         <Route path="/areas/add" component={AreasAdd} />
                         <Route path="/areas/edit" component={AreasEdit} />
-                        <Route path="/sensores" component={Sensores} />
+                        <Route exact path="/sensores" component={Sensores} />
+                        <Route path="/sensores/view" component={SensoresView} />
                         <Route path="/404" component={Page404} />
                         <Redirect from="*" to="/404" />
                     </Switch>

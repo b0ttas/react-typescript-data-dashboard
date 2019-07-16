@@ -1,7 +1,7 @@
-import React, { useEffect, useState, Props } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./AreaForm.scss";
 import { fetchDevices } from '../deviceAPI';
-import { postDB, patchDB, fetchIdDB } from '../restAPI';
+import { patchDB } from '../restAPI';
 import { Link, Redirect } from 'react-router-dom';
 
 const EditAreaForm = (props: any) => {
@@ -14,6 +14,7 @@ const EditAreaForm = (props: any) => {
             .then(setDevices)
     }, [])
 
+    //TODO: Make placeholders with area data
     const [redirect, setRedirect] = useState(false);
 
     const initialFormState = { id: '', name: '', crop: '', area: '', device: '' }
