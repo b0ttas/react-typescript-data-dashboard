@@ -19,18 +19,24 @@ export function fetchDB() {
         .then(r => r.json())
 }
 
-export function postDB(data: string[]) {
-    //duplicate id error
+export function fetchIdDB(data: string) {
+    return fetch(apiUrl + "/" + data, {
+        method: "GET",
+        headers: { 'Content-Type': 'application/json' }
 
-    let temp = { 
-        //"id": Number(data[0]), 
-        "name": data[1],
-        "crop": data[2],
-        "area": Number(data[0]),
-        "device":data[4]
-      }
+    })
+        .then(r => r.json())
+}
 
-    console.log(temp);
+export function postDB(data: { id: null, name: string, crop: string, area: string, device: string }) {
+
+    let temp = {
+        "name": data.name,
+        "crop": data.crop,
+        "area": Number(data.area),
+        "device": data.device
+    }
+
     return fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -41,20 +47,20 @@ export function postDB(data: string[]) {
         .then(r => r.json())
 }
 
-export function patchDB(data: string[]) {
-    //patch - update atribute, put - update resource
-    //ids are ignored in these types of request
-    //tested working
-    let temp = { 
-        //"id": Number(data[0]), 
-        "name": data[1],
-        "crop": data[2],
-        "area": Number(data[0]),
-        "device":data[4]
-      }
+export function patchDB(data: { id: string, name: string, crop: string, area: string, device: string }) {
 
-    console.log(temp);
-    return fetch(apiUrl + "/" + data[0], {
+    //patch - update atribute, put - update resource
+
+    let temp = {
+        "id": Number(data.id),
+        "name": data.name,
+        "crop": data.crop,
+        "area": Number(data.area),
+        "device": data.device
+    }
+
+    console.log(data.id);
+    return fetch(apiUrl + "/" + temp.id, {
         method: "PATCH",
         headers: {
             'Accept': 'application/json',

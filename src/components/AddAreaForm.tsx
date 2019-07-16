@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import "./AreaForm.scss";
 import { fetchDevices } from '../deviceAPI';
-import { postDB, patchDB } from '../restAPI';
+import { postDB } from '../restAPI';
 import { Link, Redirect } from 'react-router-dom';
 
 
-function AreaForm() {
+const AddAreaForm = (props: any) => {
+
     //Set devices initialy as an empty array
     const [devices, setDevices] = useState([]);
     //fetch the devices when the compnent mounts
@@ -15,25 +16,26 @@ function AreaForm() {
     }, [])
 
     const [redirect, setRedirect] = useState(false);
-    const [name, setName] = useState<string>('');
-    const [area, setArea] = useState<string>('');
-    const [crop, setCrop] = useState<string>('');
-    const [device, setDevice] = useState<string>('');
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        //if add, get id from length+1 postDB()
-        //edit, get id from item patchDB()
-        //in case POST leave id "" else {id}
-        var id = "";
-        var data = [id, name, crop, area, device];
-        //patchDB(data);
-        postDB(data);
-        setTimeout(()=>setRedirect(true), 2000);
+    const initialFormState = { id: null, name: '', crop: '', area: '', device: '' }
+    const [data, setData] = useState(initialFormState)
+
+    const handleInputChange = (event: any) => {
+        const { name, value } = event.target
+        setData({ ...data, [name]: value })
     }
 
-    //must(?) receive coorrespondant Area component in edit cases
-    //using a set flag for hasArea may be a easy way to read/write placeholder values and ids (if no id/area must receive lenght of db)
+    const handleSubmit = (event: any) => {
+        event.preventDefault()
+        //if (!data.name || !data.crop) return
+        console.log(data);
+        // props.addData(data)
+        //setData(initialFormState)
+        postDB(data);
+        setTimeout(() => setRedirect(true), 2000);
+
+    }
+
     return (
         <div className="areaform">
             {redirect ? <Redirect to="/areas" /> : null}
@@ -43,25 +45,24 @@ function AreaForm() {
                         <input
                             type="text"
                             name="name"
-                            value={name}
+                            value={data.name}
                             placeholder="Nome da área *"
                             required
-                            onChange={e => setName(e.target.value)}
-                        />
+                            onChange={handleInputChange} />
                         <div className="after"></div>
                     </fieldset>
                     <fieldset id="right">
-                        <input type="text" name="crop" value={crop} placeholder="Nome da cultura *" required onChange={e => setCrop(e.target.value)} />
+                        <input type="text" name="crop" value={data.crop} placeholder="Nome da cultura *" required onChange={handleInputChange} />
                         <div className="after"></div>
                     </fieldset>
                 </div>
                 <div id="line">
                     <fieldset id="left">
-                        <input type="text" name="area" value={area} placeholder="Área (ha) *" required onChange={e => setArea(e.target.value)} />
+                        <input type="text" name="area" value={data.area} placeholder="Área (ha) *" required onChange={handleInputChange} />
                         <div className="after"></div>
                     </fieldset>
                     <fieldset id="right">
-                        <select className="device" value={device} required onChange={e => setDevice(e.target.value)}>
+                        <select className="device" name="device" value={data.device} required onChange={handleInputChange}>
                             <option value="" disabled hidden>Sensor *</option>
                             {devices.map(d => (<option key={d} value={d}>{d}</option>))}
                         </select>
@@ -79,4 +80,4 @@ function AreaForm() {
     );
 }
 
-export default AreaForm;
+export default AddAreaForm;

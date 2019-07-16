@@ -16,7 +16,8 @@ import AreaList from "./components/AreaList";
 import SensorList from "./components/SensorList";
 
 import './AppStyle.scss';
-import AreaForm from './components/AreaForm';
+import AddAreaForm from './components/AddAreaForm';
+import EditAreaForm from './components/EditAreaForm';
 
 function TopNav() {
     let addPath, currHref = null;
@@ -72,7 +73,13 @@ function Areas() {
 
 function AreasAdd() {
     return (
-        <AreaForm />
+        <AddAreaForm />
+    );
+}
+
+function AreasEdit() {
+    return (
+        <EditAreaForm />
     );
 }
 
@@ -86,8 +93,8 @@ function Page404() {
     return (
         <div className="App-header">
             <div>
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>[404] Page not found.</p>
+                <img src={logo} className="App-logo" alt="logo" />
+                <p>[404] Page not found.</p>
             </div>
         </div>
     )
@@ -117,6 +124,7 @@ const App: React.FC = () => {
                         <Route exact path="/" component={Landing} />
                         <Route exact path="/areas" component={Areas} />
                         <Route path="/areas/add" component={AreasAdd} />
+                        <Route path="/areas/edit" component={AreasEdit} />
                         <Route path="/sensores" component={Sensores} />
                         <Route path="/404" component={Page404} />
                         <Redirect from="*" to="/404" />
