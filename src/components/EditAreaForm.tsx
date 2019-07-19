@@ -75,9 +75,7 @@ const EditAreaForm = (props: any) => {
                 </div>
                 <div id="right" className="options">
                     <Link to="/areas" id="cancel">Cancelar</Link>
-                    <button type="submit"></button>
-                    {/*check react-router integration, button must be ruining spa*/}
-                    <Link to="/areas" type="submit" id="save">Guardar</Link>
+                    <button type="submit" id="save">Guardar</button>
                 </div>
             </form>
         </div>

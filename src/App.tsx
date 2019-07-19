@@ -67,32 +67,38 @@ function Landing() {
 }
 
 function Areas() {
+    const [isVisible, setVisible] = React.useState(true);
     return (
-        <AreaList />
+        <AppContainer isVisible={isVisible}><AreaList /></AppContainer>
     );
 }
 
 function AreasAdd() {
+    const [isVisible, setVisible] = React.useState(true);
     return (
-        <AddAreaForm />
+        <AppContainer isVisible={isVisible}><AddAreaForm /></AppContainer>
     );
 }
 
 function AreasEdit() {
+    const [isVisible, setVisible] = React.useState(true);
     return (
-        <EditAreaForm />
+        <AppContainer isVisible={isVisible}><EditAreaForm /></AppContainer>
     );
 }
 
 function Sensores() {
+    const [isVisible, setVisible] = React.useState(true);
     return (
-        <SensorList />
+        <AppContainer isVisible={isVisible}><SensorList /></AppContainer>
     );
 }
 
 function SensoresView() {
+
+    const [isVisible, setVisible] = React.useState(true);
     return (
-        <SensorView />
+        <AppContainer isVisible={isVisible}><SensorView /></AppContainer>
     );
 }
 
@@ -126,18 +132,16 @@ const App: React.FC = () => {
                     <Link to="/areas"><img src={area} alt="area" />Áreas</Link>
                     <Link to="/sensores"><img src={sensor} alt="sensor" />Sensores</Link>
                 </SidebarComponent>
-                <AppContainer isVisible={isVisible}>
-                    <Switch>
-                        <Route exact path="/" component={Landing} />
-                        <Route exact path="/areas" component={Areas} />
-                        <Route path="/areas/add" component={AreasAdd} />
-                        <Route path="/areas/edit" component={AreasEdit} />
-                        <Route exact path="/sensores" component={Sensores} />
-                        <Route path="/sensores/view" component={SensoresView} />
-                        <Route path="/404" component={Page404} />
-                        <Redirect from="*" to="/404" />
-                    </Switch>
-                </AppContainer>
+                <Switch>
+                    <Route exact path="/" component={Landing} />
+                    <Route path="/404" component={Page404} />
+                    <Route exact path="/areas" component={Areas} />
+                    <Route path="/areas/add" component={AreasAdd} />
+                    <Route path="/areas/edit" component={AreasEdit} />
+                    <Route exact path="/sensores" component={Sensores} />
+                    <Route path="/sensores/view" component={SensoresView} />
+                    <Redirect from="*" to="/404" />
+                </Switch>
             </Router>
         </div>
     );

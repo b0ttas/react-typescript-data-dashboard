@@ -1,11 +1,12 @@
 
 .sidenav {
-  height: 100%; 
+  height: calc( 100vh - 76px);
   width: 240px; 
   position: static;
   z-index: 1;
   top: 64px;
-  overflow-x: hidden;  
+  overflow-x: hidden;
+  overflow-y: hidden;  
   visibility: visible;
   padding-top: 12px;
   position: absolute;

@@ -6,7 +6,7 @@ interface Props {
 }
 
 const divStyle = (props: Props): React.CSSProperties => ({
-    paddingLeft: props.isVisible ? "270px" : "0px",
+    marginLeft: props.isVisible ? "270px" : "0px",
     alignItems: props.isVisible ? "flex-start" : "center",
 });
 
