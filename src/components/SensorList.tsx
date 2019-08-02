@@ -13,6 +13,7 @@ function SensorList() {
             .then(setDevices)
     }, [])
 
+    //must check for device in db
 
     return (
         <div>

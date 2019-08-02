@@ -72,7 +72,7 @@ export function patchDB(data: { id: string, name: string, crop: string, area: st
 }
 
 export function deleteDB(data: string[]) {
-    //tested working
+    
     return fetch(apiUrl + "/" + data[0], {
         method: "DELETE",
         headers: {

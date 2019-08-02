@@ -1,5 +1,5 @@
 import * as React from 'react';
-import '../AppStyle.scss';
+import '../styles/AppStyle.scss';
 
 interface Props {
     isVisible: boolean;

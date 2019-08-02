@@ -16,7 +16,7 @@ import AreaList from "./components/AreaList";
 import SensorList from "./components/SensorList";
 import SensorView from "./components/SensorView";
 
-import './AppStyle.scss';
+import './styles/AppStyle.scss';
 import AddAreaForm from './components/AddAreaForm';
 import EditAreaForm from './components/EditAreaForm';
 

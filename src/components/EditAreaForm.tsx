@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import "./AreaForm.scss";
+import "../styles/AreaForm.scss";
 import { fetchDevices } from '../deviceAPI';
 import { patchDB } from '../restAPI';
 import { Link, Redirect } from 'react-router-dom';

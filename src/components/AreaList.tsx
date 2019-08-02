@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Area from "./Area"
 import { fetchDB } from '../restAPI';
 
-
-
 function AreaList() {
     type ExpectedData = {
         id?: number;
@@ -22,15 +20,16 @@ function AreaList() {
 
     }, [])
 
-    if(areas !== undefined){
+    if (areas !== undefined) {
         return (
-        <div>
-            {areas.map(a => <Area key={a.id} id={a.id} name={a.name} area={a.area} crop={a.crop} device={a.device} />)}
-        </div>);
-}
-    else{
-        return(
-            <div></div>
+            <>
+                {areas.map(a => <Area key={a.id} id={a.id} name={a.name} area={a.area} crop={a.crop} device={a.device}/>)}
+            </>
+        );
+    }
+    else {
+        return (
+            <></>
         )
     }
 }

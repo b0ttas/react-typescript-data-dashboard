@@ -1,5 +1,5 @@
 import * as React from 'react';
-import "./Sensor.scss";
+import "../styles/Sensor.scss";
 
 import ItemSpacer from '../resources/ItemSpacer.svg';
 import { Link } from 'react-router-dom';
@@ -15,7 +15,7 @@ interface Props {
 function Sensor(props: Props) {
 
     return (
-        <Link to={{pathname: `sensores/view/${props.deviceUID}`}}>
+        <Link to={{ pathname: `sensores/view/${props.deviceUID}`}}>
             <div className="sensor">
                 <span id="title">{props.deviceUID}</span>
                 <span id="content">{props.areaName} - {props.areaCulture}</span>
