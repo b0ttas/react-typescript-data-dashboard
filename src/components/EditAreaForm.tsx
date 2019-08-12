@@ -4,6 +4,7 @@ import { fetchDevices } from '../deviceAPI';
 import { patchDB } from '../restAPI';
 import { Link, Redirect } from 'react-router-dom';
 
+
 const EditAreaForm = (props: any) => {
 
     //Set devices initialy as an empty array

@@ -1,13 +1,59 @@
 .sensorview {
-    margin-top: 16px;
-    background-color: white;
+  margin-top: 16px;
+  background-color: white;
 
-    .title{
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        padding-left: 15px;
-        display: flex;
-        color: #00C4B3;
-    }
+  .title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    padding-left: 15px;
+    display: flex;
+    color: #00c4b3;
+  }
+}
+
+.legend-text {
+  .noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+  }
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: #227722;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+ul {
+  list-style-type: none;
+  margin-bottom: 15px;
+  padding: 0;
+  overflow: hidden;
+  //background-color: #333;
+}
+
+li {
+  float: left;
+  padding-left: 15px;
+}
+
+li p {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li p:hover {
+  background-color: green;
 }

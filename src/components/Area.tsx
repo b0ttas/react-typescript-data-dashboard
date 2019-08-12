@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "./Area.scss";
+import "../styles/Area.scss";
 import { deleteDB } from '../restAPI';
 import ItemSpacer from '../resources/ItemSpacer.svg';
 import { Link } from 'react-router-dom';
