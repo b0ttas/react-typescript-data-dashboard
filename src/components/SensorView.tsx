@@ -12,8 +12,7 @@ const agregation = "day"
 const beginDate = timeInMs - weekInMs;
 const endDate = timeInMs;
 
-
-var visibility = true;
+var disabledLegend: number;
 
 function SensorView(props: any) {
     type ExpectedResponse = {
@@ -34,7 +33,7 @@ function SensorView(props: any) {
     const [response, setResponse] = useState<Array<ExpectedResponse> | undefined>();
 
     const [isVisible, setVisible] = useState([true, true, true, true]);
-
+    const [disabledLegend, setDisabled] = useState(-1)
 
     let one: Array<Series> = [],
         two: Array<Series> = [],
@@ -47,14 +46,6 @@ function SensorView(props: any) {
         fetchMoisture(deviceID, agregation, beginDate, endDate)
             .then(setResponse)
     }, [])
-
-
-    useEffect(() => {
-        if (isVisible.filter(Boolean).length === 1){
-            //Desativar onClick do único elemento true, é possivel fazer isto dando o valor 'undefined'
-            isVisible.findIndex(Boolean)
-        }
-    });
 
     if (response !== undefined) {
 
@@ -137,29 +128,49 @@ function SensorView(props: any) {
         const dotStyle3 = { backgroundColor: data.datasets[2].backgroundColor, };
         const dotStyle4 = { backgroundColor: data.datasets[3].backgroundColor, };
 
+        var click1 = () => setVisible([!isVisible[0], isVisible[1], isVisible[2], isVisible[3]]);
+        var click2 = () => setVisible([isVisible[0], !isVisible[1], isVisible[2], isVisible[3]]);
+        var click3 = () => setVisible([isVisible[0], isVisible[1], !isVisible[2], isVisible[3]]);
+        var click4 = () => setVisible([isVisible[0], isVisible[1], isVisible[2], !isVisible[3]]);
+
         const legendStyle = (isVisible: boolean): React.CSSProperties => ({
             textDecoration: isVisible ? "none" : "line-through",
         });
 
-        var test = undefined
-        //var test = () => setVisible([!isVisible[0], isVisible[1], isVisible[2], isVisible[3]])
 
+        if (isVisible.filter(Boolean).length === 1) {
+            setDisabled(isVisible.findIndex(Boolean));
+            switch (disabledLegend) {
+                case 0:
+                    click1 = () => undefined;
+                    break;
+                case 1:
+                    click2 = () => undefined;
+                    break;
+                case 2:
+                    click3 = () => undefined;
+                    break;
+                case 3:
+                    click4 = () => undefined;
+                    break;
+            }
+        }
 
         return (
             <ul>
-                <li key={data.datasets[0].label} onClick={test}>
+                <li key={data.datasets[0].label} onClick={click1}>
                     <span className="dot" style={dotStyle1}></span>
                     <span className="legend-text" style={legendStyle(isVisible[0])}>{data.datasets[0].label}</span>
                 </li>
-                <li key={data.datasets[1].label} onClick={() => setVisible([isVisible[0], !isVisible[1], isVisible[2], isVisible[3]])}>
+                <li key={data.datasets[1].label} onClick={click2}>
                     <span className="dot" style={dotStyle2}></span>
                     <span className="legend-text" style={legendStyle(isVisible[1])}>{data.datasets[1].label}</span>
                 </li>
-                <li key={data.datasets[2].label} onClick={() => setVisible([isVisible[0], isVisible[1], !isVisible[2], isVisible[3]])}>
+                <li key={data.datasets[2].label} onClick={click3}>
                     <span className="dot" style={dotStyle3}></span>
                     <span className="legend-text" style={legendStyle(isVisible[2])}>{data.datasets[2].label}</span>
                 </li>
-                <li key={data.datasets[3].label} onClick={() => setVisible([isVisible[0], isVisible[1], isVisible[2], !isVisible[3]])}>
+                <li key={data.datasets[3].label} onClick={click4}>
                     <span className="dot" style={dotStyle4}></span>
                     <span className="legend-text" style={legendStyle(isVisible[3])}>{data.datasets[3].label}</span>
                 </li>
