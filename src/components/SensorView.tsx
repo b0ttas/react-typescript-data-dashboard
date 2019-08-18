@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Line, defaults } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 import '../styles/SensorView.scss'
 import { fetchMoisture } from '../deviceAPI';
-import { number, bool } from 'prop-types';
 
 var timeInMs = Date.now(); //(ms) since 1 de janeiro de 1970 00:00:00 UTC
 const weekInMs = 518400000; //7 days 604800000 gives 8 results, using 6 days;
@@ -11,8 +10,6 @@ var deviceID = ""
 const agregation = "day"
 const beginDate = timeInMs - weekInMs;
 const endDate = timeInMs;
-
-var disabledLegend: number;
 
 function SensorView(props: any) {
     type ExpectedResponse = {
@@ -31,7 +28,6 @@ function SensorView(props: any) {
     deviceID = window.location.pathname.substring(15);
 
     const [response, setResponse] = useState<Array<ExpectedResponse> | undefined>();
-
     const [isVisible, setVisible] = useState([true, true, true, true]);
     const [disabledLegend, setDisabled] = useState(-1)
 

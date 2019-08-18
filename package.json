@@ -18,7 +18,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "sass": "^1.21.0",
-    "typescript": "3.5.2"
+    "typescript": "3.5.2",
+    "use-react-router": "^1.0.7"
   },
   "scripts": {
     "start": "react-scripts start",

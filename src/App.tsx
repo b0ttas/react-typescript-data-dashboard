@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Redirect } from 'react-router-dom';
+
+import useReactRouter from 'use-react-router';
 
 import { SidebarComponent } from './components/Sidebar';
 import { AppContainer } from './components/AppContainer';
@@ -20,40 +22,43 @@ import './styles/AppStyle.scss';
 import AddAreaForm from './components/AddAreaForm';
 import EditAreaForm from './components/EditAreaForm';
 
-function TopNav() {
-    let addPath, currHref = null;
-    let navTitle;
+const TopNav = () => {
+    let addPath;
+    let object = ["", ""];
+    const { location } = useReactRouter();
 
-    currHref = window.location.pathname.substring(1);
 
-    switch (currHref) {
-        case "areas":
-            navTitle = <Link to="/areas" className="active">Áreas</Link>
-            addPath = <Link to="/areas/add" id="add">Adicionar<img id="add-img" src={plus} className="App-plus" alt="plus" /></Link>
-            break;
-        case "sensores":
-            navTitle = <Link to="/sensores" className="active">Sensores</Link>
-            break;
-        case "areas-add":
-            navTitle = <Link to="/areas" className="active">Áreas</Link>
-            currHref = "";
-            break;
-        default:
+    if (location.pathname === "/areas") {
+        object = ["Áreas", "/areas"];
+        addPath = <Link to="/areas/add" id="add">Adicionar<img id="add-img" src={plus} className="App-plus" alt="plus" /></Link>
+    }
+    else if (location.pathname === "/sensores") {
+        object = ["Sensores", "/sensores"];
+        addPath = undefined;
+    }
+    else if (location.pathname === "/areas/add") {
+        object = ["Criar Área", "/areas"];
+        addPath = undefined;
     }
 
+    else if (location.pathname.slice(0,11) === "/areas/edit") {
+        object = ["Editar Área", "/areas"];
+        addPath = undefined;
+    }
+
+    else if (location.pathname.slice(0,14) === "/sensores/view") {
+        object = [location.pathname.slice(15), "/sensores"];
+        addPath = undefined;
+    }
+    
     return (
         <div>
-            {navTitle}
+            <Link to={object[1]} className="active">{object[0]}</Link>
             {addPath}
         </div>
     )
 }
 
-const TopbarComponent: React.FunctionComponent = props => (
-    <div className="topmennav">
-        {props.children}
-    </div>
-);
 
 function Landing() {
     return (
@@ -67,38 +72,33 @@ function Landing() {
 }
 
 function Areas() {
-    const [isVisible, setVisible] = React.useState(true);
     return (
-        <AppContainer isVisible={isVisible}><AreaList /></AppContainer>
+        <AreaList />
     );
 }
 
 function AreasAdd() {
-    const [isVisible, setVisible] = React.useState(true);
     return (
-        <AppContainer isVisible={isVisible}><AddAreaForm /></AppContainer>
+        <AddAreaForm />
     );
 }
 
 function AreasEdit() {
-    const [isVisible, setVisible] = React.useState(true);
     return (
-        <AppContainer isVisible={isVisible}><EditAreaForm /></AppContainer>
+        <EditAreaForm />
     );
 }
 
 function Sensores() {
-    const [isVisible, setVisible] = React.useState(true);
     return (
-        <AppContainer isVisible={isVisible}><SensorList /></AppContainer>
+        <SensorList />
     );
 }
 
 function SensoresView() {
 
-    const [isVisible, setVisible] = React.useState(true);
     return (
-        <AppContainer isVisible={isVisible}><SensorView /></AppContainer>
+        <SensorView />
     );
 }
 
@@ -113,35 +113,36 @@ function Page404() {
     )
 }
 
-const App: React.FC = () => {
+const App = () => {
 
-    const [isVisible, setVisible] = React.useState(true);
+    const [isVisible, setVisible] = useState(true);
 
     return (
         <div className="App">
             <Router>
-                <TopbarComponent>
-                    <div className="topnav">
-                        <span onClick={() => setVisible(!isVisible)} id="menu-span">&#9776;</span>
-                        <Link to="/" id="brand"><img src={brand} className="App-brand" alt="brand" /></Link>
-                        <span><img src={spacer} alt="" /></span>
-                        <TopNav />
-                    </div>
-                </TopbarComponent>
+                <div className="topnav">
+                    <span onClick={() => setVisible(!isVisible)} id="menu-span">&#9776;</span>
+                    <Link to="/" id="brand"><img src={brand} className="App-brand" alt="brand" /></Link>
+                    <span><img src={spacer} alt="" /></span>
+                    <TopNav />
+                </div>
                 <SidebarComponent isVisible={isVisible}>
                     <Link to="/areas"><img src={area} alt="area" />Áreas</Link>
                     <Link to="/sensores"><img src={sensor} alt="sensor" />Sensores</Link>
                 </SidebarComponent>
-                <Switch>
-                    <Route exact path="/" component={Landing} />
-                    <Route path="/404" component={Page404} />
-                    <Route exact path="/areas" component={Areas} />
-                    <Route path="/areas/add" component={AreasAdd} />
-                    <Route path="/areas/edit" component={AreasEdit} />
-                    <Route exact path="/sensores" component={Sensores} />
-                    <Route path="/sensores/view" component={SensoresView} />
-                    <Redirect from="*" to="/404" />
-                </Switch>
+
+                <AppContainer isVisible={isVisible}>
+                    <Switch>
+                        <Route exact path="/" component={Landing} />
+                        <Route path="/404" component={Page404} />
+                        <Route exact path="/areas" component={Areas} />
+                        <Route path="/areas/add" component={AreasAdd} />
+                        <Route path="/areas/edit" component={AreasEdit} />
+                        <Route exact path="/sensores" component={Sensores} />
+                        <Route path="/sensores/view" component={SensoresView} />
+                        <Redirect from="*" to="/404" />
+                    </Switch>
+                </AppContainer>
             </Router>
         </div>
     );
