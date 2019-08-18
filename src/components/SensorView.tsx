@@ -3,13 +3,7 @@ import { Line } from 'react-chartjs-2';
 
 import '../styles/SensorView.scss'
 import { fetchMoisture } from '../deviceAPI';
-
-var timeInMs = Date.now(); //(ms) since 1 de janeiro de 1970 00:00:00 UTC
-const weekInMs = 518400000; //7 days 604800000 gives 8 results, using 6 days;
-var deviceID = ""
-const agregation = "day"
-const beginDate = timeInMs - weekInMs;
-const endDate = timeInMs;
+import calendar from '../resources/calendar.svg';
 
 function SensorView(props: any) {
     type ExpectedResponse = {
@@ -25,7 +19,12 @@ function SensorView(props: any) {
         y: number,
     }
 
-    deviceID = window.location.pathname.substring(15);
+    var deviceID = window.location.pathname.substring(15);
+    var timeInMs = Date.now(); //(ms) since 1 de janeiro de 1970 00:00:00 UTC
+    const weekInMs = 518400000; //7 days 604800000 gives 8 results, using 6 days;
+    const agregation = "day"
+    const beginDate = timeInMs - weekInMs;
+    const endDate = timeInMs;
 
     const [response, setResponse] = useState<Array<ExpectedResponse> | undefined>();
     const [isVisible, setVisible] = useState([true, true, true, true]);
@@ -108,7 +107,6 @@ function SensorView(props: any) {
     }
 
     var sumdata = {
-        labels: ["Time Frame", "Dia", "Dia", "Dia"], //x-axis 
         datasets: [{
             fill: false,
             label: "Total",
@@ -224,30 +222,23 @@ function SensorView(props: any) {
         }
     }
 
-    const options_sum = {
-
-        legend: {
-            display: false,
-        }
-    }
-
-
     if (response !== undefined) {
         return (
             <div className="sensorview">
                 <p className="title">Humidade do solo</p>
+                <img src={calendar} className="date-picker-icon" alt="date-icon" />
                 <Legend />
                 <Line
                     data={data}
                     options={options}
-                    width={960}
-                    height={400}
+                    width={1560}
+                    height={380}
                 />
                 <Line
                     data={sumdata}
-                    options={options_sum}
-                    width={960}
-                    height={400}
+                    options={options}
+                    width={1560}
+                    height={380}
                 />
             </div>
         );

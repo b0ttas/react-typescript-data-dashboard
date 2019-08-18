@@ -3,12 +3,19 @@
   background-color: white;
 
   .title {
+    float: left;
+    margin-top: 10px;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     padding-left: 15px;
-    display: flex;
     color: #00c4b3;
+  }
+
+  .date-picker-icon {
+    float: right;
+    margin-top: 10px;
+    padding-right: 15px;
   }
 }
 
@@ -35,10 +42,10 @@
 
 ul {
   list-style-type: none;
+  margin-top: 50px;
   margin-bottom: 15px;
   padding: 0;
   overflow: hidden;
-  //background-color: #333;
 }
 
 li {
