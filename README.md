@@ -1,44 +1,51 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React TypeScript Data Dashboard
 
-## Available Scripts
+This repository contains a React-based data dashboard developed as part of an interview process requirement for Agroop. The project is implemented using modern front-end technologies, emphasizing TypeScript for type safety, SCSS for styling, and a component-based architecture.
 
-In the project directory, you can run:
+## Repository Structure
 
-### `npm start`
+The repository is organized into the following main components:
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **TypeScript**: The primary language used for the application, ensuring type safety and maintainable code.
+- **SCSS**: Used for styling the application with reusable and modular stylesheets.
+- **HTML**: Markup for structuring the application within React components.
+- **CSS**: Additional styling where SCSS is not used.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+To run this project locally, follow these steps:
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/b0ttas/react-typescript-data-dashboard.git
+   cd react-typescript-data-dashboard
+   
+2. Install dependencies: Make sure you have Node.js and npm installed. Then run:
+   ```bash
+   npm install
 
-### `npm run build`
+3. Start the development server:
+   ```bash
+   npm start
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Contribution Guidelines
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+This repository was created for an interview process and is not actively maintained. However, if you wish to contribute:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Submit a pull request with a detailed explanation of your changes.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Technologies Used
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The project uses the following technologies and tools:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- **React**: For building the user interface with reusable components.
+- **Typescript**: For static typing and improved developer experience.
+- **SCSS**: For styling, leveraging variables, mixins, and nested rules.
+- **HTML & CSS**: For markup and additional styling.
+  
+## License
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This repository does not have a specific license. If you wish to use or adapt any code from this repository, please contact me for permission.
