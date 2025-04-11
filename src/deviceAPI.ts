@@ -1,23 +1,34 @@
-export const apiUrl = "https://api-device.agroop.net";
-const username = "testuser";
-const password = "testpassword";
-export const token = btoa(`${username}:${password}`);
+export const apiUrl = "http://localhost:3001/devices";
+export async function fetchMoisture(
+    deviceID: string,
+    aggregation: string,
+    beginDate: number,
+    endDate: number
+) {
 
-export function fetchDevices() {
-    return fetch(apiUrl + '/devices', {
-        method: "GET",
-        headers: { 'Content-Type': 'application/json', Authorization: `Basic ${token}` }
+    const url = new URL(`http://localhost:3001/soilMoisture`);
+    url.searchParams.append('deviceID', deviceID);
+    url.searchParams.append('timestamp_gte', beginDate.toString());
+    url.searchParams.append('timestamp_lte', endDate.toString());
 
-    })
-        .then(r => r.json())
+    const response = await fetch(url.toString(), {        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'}
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
 }
 
-export function fetchMoisture(deviceID: string, agregation: string, beginDate: number, endDate: number) {
-
-    return fetch(apiUrl + '/devices/' + deviceID + '/soilMoisture?aggregation=' + agregation + '&beginDate=' + beginDate + '&endDate=' + endDate, {
-        method: "GET",
-        headers: { 'Content-Type': 'application/json', Authorization: `Basic ${token}`, Accept: 'application/json' }
-
-    })
-        .then(r => r.json())
+export async function fetchDevices() {
+    const r =
+        await fetch(apiUrl, {
+            method: "GET",
+            headers: {'Content-Type': 'application/json'}
+        });
+    return await r.json();
 }

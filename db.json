@@ -1,32 +1,81 @@
 {
   "areas": [
     {
-      "id": 0,
-      "name": "Lorrie Sunders",
-      "crop": "Tic-Tacs",
-      "area": "1337",
-      "device": "ac160007-6894-1d8a-8168-94bdb30a003a"
+      "id": "4",
+      "name": "this is messed up 2",
+      "crop": "banana",
+      "area": 55,
+      "device": "1"
+    }
+  ],
+  "devices": [
+    {
+      "id": "1",
+      "name": "Field Sensor 1",
+      "type": "soil",
+      "location": "North Field",
+      "lastActive": "2023-05-15T10:30:00Z"
     },
     {
-      "id": 1,
-      "name": "Ervin Bowel",
-      "crop": "Brocolis",
-      "area": 59,
-      "device": "ac160007-6894-1d8a-8168-94bdb30a003a"
+      "id": "2",
+      "name": "Greenhouse Monitor",
+      "type": "soil",
+      "location": "Main Greenhouse",
+      "lastActive": "2023-05-14T15:45:00Z"
     },
     {
-      "id": 2,
-      "name": "Benjamin Clementine",
-      "crop": "Bloody Beetroots",
-      "area": 666,
-      "device": "ac160007-6894-1d8a-8168-94bdb30a003a"
+      "id": "3",
+      "name": "Orchard Sensor",
+      "type": "soil",
+      "location": "Apple Orchard",
+      "lastActive": "2023-05-15T08:20:00Z"
+    }
+  ],
+  "soilMoisture": [
+    {
+      "deviceID": "1",
+      "timestamp": 1684147200000,
+      "S1T": 42.5,
+      "S2T": 40.1,
+      "S3T": 38.7,
+      "S4T": 36.2,
+      "unit": "%"
     },
     {
-      "id": 3,
-      "name": "Delicious Bloodpack",
-      "crop": "Bananen",
-      "area": 23,
-      "device": "ac160007-6894-1d8a-8168-94bdb30a003a"
+      "deviceID": "1",
+      "timestamp": 1684150800000,
+      "S1T": 41.8,
+      "S2T": 39.4,
+      "S3T": 37.9,
+      "S4T": 35.5,
+      "unit": "%"
+    },
+    {
+      "deviceID": "1",
+      "timestamp": 1684154400000,
+      "S1T": 40.2,
+      "S2T": 38.0,
+      "S3T": 36.5,
+      "S4T": 34.1,
+      "unit": "%"
+    },
+    {
+      "deviceID": "2",
+      "timestamp": 1684147200000,
+      "S1T": 35.7,
+      "S2T": 34.2,
+      "S3T": 33.0,
+      "S4T": 31.5,
+      "unit": "%"
+    },
+    {
+      "deviceID": "3",
+      "timestamp": 1684147200000,
+      "S1T": 35.7,
+      "S2T": 34.2,
+      "S3T": 33.0,
+      "S4T": 31.5,
+      "unit": "%"
     }
   ]
 }

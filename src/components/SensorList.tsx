@@ -1,23 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import Sensor from "./Sensor"
-
 import { fetchDevices } from '../deviceAPI';
 
+interface Device {
+    id: string;
+    name: string;
+    type: string;
+    location: string;
+    lastActive: string;
+}
+
 function SensorList() {
+    const [devices, setDevices] = useState<Device[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState(null);
 
-    //Set devices initialy as an empty array
-    const [devices, setDevices] = useState([]);
-    //fetch the devices when the compnent mounts
     useEffect(() => {
-        fetchDevices()
-            .then(setDevices)
-    }, [])
+        const loadDevices = async () => {
+            try {
+                const data = await fetchDevices();
+                setDevices(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    //must check for device in db
+        loadDevices();
+    }, []);
+
+    if (loading) return <div>Loading devices...</div>;
+    if (error) return <div>Error loading devices: {error}</div>;
+    if (devices.length === 0) return <div>No devices found</div>;
 
     return (
         <div>
-            {devices.map(d =>  <Sensor key={d} deviceUID={d} />)}
+            {devices.map(device =>
+                <Sensor key={device.id} deviceUID={device.id}
+                />
+            )}
         </div>);
 }
 

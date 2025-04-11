@@ -1,9 +1,15 @@
 .sensorview {
-  margin-top: 16px;
   background-color: white;
-
+  max-width: 1200px;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  height: calc(100vh - 76px);
+  overflow-y: auto;
   .title {
-    float: left;
+    text-align: left;
     margin-top: 10px;
     font-style: normal;
     font-weight: 500;

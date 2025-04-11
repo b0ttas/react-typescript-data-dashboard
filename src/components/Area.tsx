@@ -32,7 +32,7 @@ function Area(props: Props) {
             <span id="content">{props.crop} - {props.area} ha</span>
             <img id="spacer" src={ItemSpacer} alt=""></img>
             <span id="options">
-                <Link to={{ pathname: `areas/edit/${props.id}`, state: { props: props } }} id="edit">Editar</Link>
+                <Link to={`/areas/edit/${props.id}`} state={{ props }} id="edit">Editar</Link>
                 <Link to="/areas" onClick={handleRemove} id="delete">Eliminar</Link>
             </span>
         </div>

@@ -10,25 +10,23 @@ PATCH  /employees/{id}
 DELETE /employees/{id}
 */
 
-export function fetchDB() {
-    return fetch(apiUrl, {
+export async function fetchDB() {
+    const r = await fetch(apiUrl, {
         method: "GET",
-        headers: { 'Content-Type': 'application/json' }
-
-    })
-        .then(r => r.json())
+        headers: {'Content-Type': 'application/json'}
+    });
+    return await r.json();
 }
 
-export function fetchIdDB(data: string) {
-    return fetch(apiUrl + "/" + data, {
+export async function fetchIdDB(data: string) {
+    const r = await fetch(apiUrl + "/" + data, {
         method: "GET",
-        headers: { 'Content-Type': 'application/json' }
-
-    })
-        .then(r => r.json())
+        headers: {'Content-Type': 'application/json'}
+    });
+    return await r.json();
 }
 
-export function postDB(data: { id: null, name: string, crop: string, area: string, device: string }) {
+export async function postDB(data: { id: null, name: string, crop: string, area: string, device: string }) {
 
     let temp = {
         "name": data.name,
@@ -37,17 +35,17 @@ export function postDB(data: { id: null, name: string, crop: string, area: strin
         "device": data.device
     }
 
-    return fetch(apiUrl, {
+    const r = await fetch(apiUrl, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(temp)
-    })
-        .then(r => r.json())
+    });
+    return await r.json();
 }
 
-export function patchDB(data: { id: string, name: string, crop: string, area: string, device: string }) {
+export async function patchDB(data: { id: string, name: string, crop: string, area: string, device: string }) {
 
     //patch - update atribute, put - update resource
 
@@ -60,26 +58,26 @@ export function patchDB(data: { id: string, name: string, crop: string, area: st
     }
 
     console.log(data.id);
-    return fetch(apiUrl + "/" + temp.id, {
+    const r = await fetch(apiUrl + "/" + temp.id, {
         method: "PATCH",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(temp)
-    })
-        .then(r => r.json())
+    });
+    return await r.json();
 }
 
-export function deleteDB(data: string[]) {
-    
-    return fetch(apiUrl + "/" + data[0], {
+export async function deleteDB(data: string[]) {
+
+    const r = await fetch(apiUrl + "/" + data[0], {
         method: "DELETE",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    })
-        .then(r => r.json())
+    });
+    return await r.json();
 }

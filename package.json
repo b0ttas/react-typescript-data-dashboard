@@ -10,25 +10,38 @@
     "@types/react-router-dom": "^4.3.4",
     "chart.js": "^2.8.0",
     "install": "^0.13.0",
-    "json-server": "^0.15.0",
-    "node-sass": "^4.12.0",
+    "json-server": "^1.0.0-beta.3",
+    "mime": "^4.0.7",
     "react": "^16.8.6",
     "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
-    "sass": "^1.21.0",
-    "typescript": "3.5.2",
-    "use-react-router": "^1.0.7"
+    "react-router-dom": "^6.30.0",
+    "react-scripts": "^5.0.1",
+    "typescript": "^3.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "json-server --watch db.json --port 3001"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": []
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "sass": "^1.86.3"
+  }
 }

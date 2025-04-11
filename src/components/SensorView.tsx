@@ -1,252 +1,308 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Line } from 'react-chartjs-2';
+// *** IMPORTANT: Make sure Chart.js components are registered ***
+// Usually done in your main app file (e.g., index.js or App.js)
+// import {
+//   Chart as ChartJS,
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   Legend as ChartJsLegend, // Rename to avoid conflict with custom Legend
+//   TimeScale, // Import TimeScale
+// } from 'chart.js';
+// import 'chartjs-adapter-date-fns'; // Or your preferred adapter
 
-import '../styles/SensorView.scss'
-import { fetchMoisture } from '../deviceAPI';
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+//   Title,
+//   Tooltip,
+//   ChartJsLegend,
+//   TimeScale // Register TimeScale
+// );
+// ***************************************************************
+
+
+import '../styles/SensorView.scss';
+import { fetchMoisture } from '../deviceAPI'; // Assuming this returns Promise<MoistureData[]>
 import calendar from '../resources/calendar.svg';
 
-function SensorView(props: any) {
-    type ExpectedResponse = {
-        S1T: number;
-        S2T: number;
-        S3T: number;
-        S4T: number;
-        timestamp: number;
-    }
+interface MoistureData {
+    S1T: number;  // 10cm depth
+    S2T: number;  // 25cm depth
+    S3T: number;  // 40cm depth
+    S4T: number;  // 55cm depth
+    timestamp: number; // Assuming this is a Unix timestamp (milliseconds)
+}
 
-    type Series = {
-        x: number,
-        y: number,
-    }
+interface SeriesData {
+    x: number;
+    y: number;
+}
 
-    var deviceID = window.location.pathname.substring(15);
-    var timeInMs = Date.now(); //(ms) since 1 de janeiro de 1970 00:00:00 UTC
-    const weekInMs = 518400000; //7 days 604800000 gives 8 results, using 6 days;
-    const agregation = "day"
-    const beginDate = timeInMs - weekInMs;
-    const endDate = timeInMs;
+// --- Define constants outside the component ---
+const WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
+const AGGREGATION = "day";
+// Calculate dates once, potentially outside or using useState/useRef if they need to be dynamic but stable
+const endDate = Date.now();
+const beginDate = 0;
 
-    const [response, setResponse] = useState<Array<ExpectedResponse> | undefined>();
-    const [isVisible, setVisible] = useState([true, true, true, true]);
-    const [disabledLegend, setDisabled] = useState(-1)
+// --- Define colors outside ---
+const COLORS = {
+    S1: '#F44336', // 10cm
+    S2: '#FFC107', // 25cm
+    S3: '#2E7D32', // 40cm
+    S4: '#2979FF', // 55cm
+    SUM: '#673AB7', // Example color for Sum
+};
 
-    let one: Array<Series> = [],
-        two: Array<Series> = [],
-        three: Array<Series> = [],
-        four: Array<Series> = [],
-        sum: Array<Series> = [],
-        holder = [one, two, three, four, sum];
+// --- Custom Legend Component (moved outside SensorView) ---
+interface CustomLegendProps {
+    datasets: { label: string; backgroundColor: string }[];
+    isVisible: boolean[];
+    onToggle: (index: number) => void;
+}
 
+const CustomLegend: React.FC<CustomLegendProps> = React.memo(({ datasets, isVisible, onToggle }) => {
+    const handleToggle = (index: number) => {
+        const currentlyVisibleCount = isVisible.filter(Boolean).length;
+        // Prevent hiding the last visible item
+        if (currentlyVisibleCount === 1 && isVisible[index]) {
+            console.log("Cannot hide the last visible sensor.");
+            return;
+        }
+        onToggle(index);
+    };
+
+    const getLegendStyle = (visible: boolean): React.CSSProperties => ({
+        textDecoration: visible ? "none" : "line-through",
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        marginBottom: '5px',
+    });
+
+    const getDotStyle = (color: string): React.CSSProperties => ({
+        backgroundColor: color,
+        width: '10px',
+        height: '10px',
+        borderRadius: '50%',
+        display: 'inline-block',
+        marginRight: '8px',
+    });
+
+    return (
+        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', justifyContent: 'center', gap: '20px' }}>
+            {datasets.map((dataset, index) => (
+                <li key={dataset.label} onClick={() => handleToggle(index)} style={getLegendStyle(isVisible[index])}>
+                    <span style={getDotStyle(dataset.backgroundColor)}></span>
+                    <span>{dataset.label}</span>
+                </li>
+            ))}
+        </ul>
+    );
+});
+// --- End Custom Legend Component ---
+
+
+function SensorView(props: any) { // Consider defining props interface if any are passed
+    // Extract deviceID (Consider using React Router's useParams for better practice)
+    const deviceID = useMemo(() => window.location.pathname.substring(15), []);
+
+    const [moistureData, setMoistureData] = useState<MoistureData[] | null>(null);
+    const [isVisible, setIsVisible] = useState<boolean[]>([true, true, true, true]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    // Fetch data on mount or when relevant dependencies change
     useEffect(() => {
-        fetchMoisture(deviceID, agregation, beginDate, endDate)
-            .then(setResponse)
-    }, [])
+        setIsLoading(true);
+        setError(null);
+        console.log(`Workspaceing data for device ${deviceID} from ${new Date(beginDate)} to ${new Date(endDate)}`);
 
-    if (response !== undefined) {
+        fetchMoisture(deviceID, AGGREGATION, beginDate, endDate)
+            .then(data => {
+                // Sort data by timestamp if not already sorted by API
+                console.log(data);
+                data.sort((a:MoistureData, b:MoistureData) => a.timestamp - b.timestamp);
+                setMoistureData(data);
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.error("Failed to fetch moisture data:", err);
+                setError("Failed to load sensor data. Please try again later.");
+                setIsLoading(false);
+            });
+        // Dependencies: Only include variables that, if changed, should trigger a refetch.
+        // beginDate and endDate are constant in this setup. AGGREGATION is also constant.
+    }, [deviceID]); // Add AGGREGATION, beginDate, endDate if they can change reactively
 
-        let total = 0;
+    // Memoize chart data preparation
+    const chartDatasets = useMemo(() => {
+        if (!moistureData) return [];
 
-        for (let value of response) {
-            one.push({ x: value.timestamp, y: value.S1T });
-            two.push({ x: value.timestamp, y: value.S2T });
-            three.push({ x: value.timestamp, y: value.S3T });
-            four.push({ x: value.timestamp, y: value.S4T });
+        return [
+            {
+                fill: false,
+                label: '10cm',
+                borderColor: COLORS.S1,
+                backgroundColor: COLORS.S1,
+                data: moistureData.map(d => ({ x: d.timestamp, y: d.S1T })),
+                hidden: !isVisible[0], // Control visibility via 'hidden' property
+            },
+            {
+                fill: false,
+                label: "25cm",
+                borderColor: COLORS.S2,
+                backgroundColor: COLORS.S2,
+                data: moistureData.map(d => ({ x: d.timestamp, y: d.S2T })),
+                hidden: !isVisible[1],
+            },
+            {
+                fill: false,
+                label: "40cm",
+                borderColor: COLORS.S3,
+                backgroundColor: COLORS.S3,
+                data: moistureData.map(d => ({ x: d.timestamp, y: d.S3T })),
+                hidden: !isVisible[2],
+            },
+            {
+                fill: false,
+                label: "55cm",
+                borderColor: COLORS.S4,
+                backgroundColor: COLORS.S4,
+                data: moistureData.map(d => ({ x: d.timestamp, y: d.S4T })),
+                hidden: !isVisible[3],
+            },
+        ];
+    }, [moistureData, isVisible]);
 
-            let auxS1T = value.S1T, auxS2T = value.S2T, auxS3T = value.S3T, auxS4T = value.S4T;
+    const sumChartDataset = useMemo(() => {
+        if (!moistureData) return [];
 
-            if (isVisible[0] === false) { auxS1T = 0 }
-            if (isVisible[1] === false) { auxS2T = 0 }
-            if (isVisible[2] === false) { auxS3T = 0 }
-            if (isVisible[3] === false) { auxS4T = 0 }
-
-            total = auxS1T + auxS2T + auxS3T + auxS4T;
-
-            sum.push({ x: value.timestamp, y: total });
-        }
-
-        let aux = holder;
-
-        for (let i = 0; i <= 3; i++) {
-            if (isVisible[i] === false) {
-                holder[i] = []
-            }
-            else {
-                holder[i] = aux[i]
-            }
-        }
-    }
-
-
-    var data = {
-        datasets: [{
-            fill: false,
-            label: '10cm',
-            borderColor: '#F44336',
-            backgroundColor: '#F44336',
-            data: holder[0],
-        }, {
-            fill: false,
-            label: "25cm",
-            borderColor: '#FFC107',
-            backgroundColor: '#FFC107',
-            data: holder[1],
-        }, {
-            fill: false,
-            label: "40cm",
-            borderColor: '#2E7D32',
-            backgroundColor: '#2E7D32',
-            data: holder[2],
-        }, {
-            fill: false,
-            label: "55cm",
-            borderColor: '#2979FF',
-            backgroundColor: '#2979FF',
-            data: holder[3],
-        },
-        ]
-    }
-
-    var sumdata = {
-        datasets: [{
-            fill: false,
-            label: "Total",
-            borderColor: '#2979FF',
-            backgroundColor: '#2979FF',
-            data: holder[4],
-        }]
-    }
-
-    function Legend() {
-        const dotStyle1 = { backgroundColor: data.datasets[0].backgroundColor, };
-        const dotStyle2 = { backgroundColor: data.datasets[1].backgroundColor, };
-        const dotStyle3 = { backgroundColor: data.datasets[2].backgroundColor, };
-        const dotStyle4 = { backgroundColor: data.datasets[3].backgroundColor, };
-
-        var click1 = () => setVisible([!isVisible[0], isVisible[1], isVisible[2], isVisible[3]]);
-        var click2 = () => setVisible([isVisible[0], !isVisible[1], isVisible[2], isVisible[3]]);
-        var click3 = () => setVisible([isVisible[0], isVisible[1], !isVisible[2], isVisible[3]]);
-        var click4 = () => setVisible([isVisible[0], isVisible[1], isVisible[2], !isVisible[3]]);
-
-        const legendStyle = (isVisible: boolean): React.CSSProperties => ({
-            textDecoration: isVisible ? "none" : "line-through",
+        const sumData: SeriesData[] = moistureData.map(value => {
+            let total = 0;
+            // Only include visible sensors in the sum
+            if (isVisible[0]) total += value.S1T;
+            if (isVisible[1]) total += value.S2T;
+            if (isVisible[2]) total += value.S3T;
+            if (isVisible[3]) total += value.S4T;
+            return { x: value.timestamp, y: total };
         });
 
+        return [{
+            fill: false,
+            label: "Total Visible", // Label reflects what's being summed
+            borderColor: COLORS.SUM,
+            backgroundColor: COLORS.SUM,
+            data: sumData,
+        }];
+    }, [moistureData, isVisible]); // Sum MUST depend on isVisible
 
-        if (isVisible.filter(Boolean).length === 1) {
-            setDisabled(isVisible.findIndex(Boolean));
-            switch (disabledLegend) {
-                case 0:
-                    click1 = () => undefined;
-                    break;
-                case 1:
-                    click2 = () => undefined;
-                    break;
-                case 2:
-                    click3 = () => undefined;
-                    break;
-                case 3:
-                    click4 = () => undefined;
-                    break;
-            }
-        }
-
-        return (
-            <ul>
-                <li key={data.datasets[0].label} onClick={click1}>
-                    <span className="dot" style={dotStyle1}></span>
-                    <span className="legend-text" style={legendStyle(isVisible[0])}>{data.datasets[0].label}</span>
-                </li>
-                <li key={data.datasets[1].label} onClick={click2}>
-                    <span className="dot" style={dotStyle2}></span>
-                    <span className="legend-text" style={legendStyle(isVisible[1])}>{data.datasets[1].label}</span>
-                </li>
-                <li key={data.datasets[2].label} onClick={click3}>
-                    <span className="dot" style={dotStyle3}></span>
-                    <span className="legend-text" style={legendStyle(isVisible[2])}>{data.datasets[2].label}</span>
-                </li>
-                <li key={data.datasets[3].label} onClick={click4}>
-                    <span className="dot" style={dotStyle4}></span>
-                    <span className="legend-text" style={legendStyle(isVisible[3])}>{data.datasets[3].label}</span>
-                </li>
-            </ul>
-        )
-    }
-
-    const options = {
+    // Chart options (memoized)
+    const chartOptions = useMemo(() => ({
         responsive: true,
-        title: {
-            display: false,
-            text: 'Humidade do solo',
-            position: 'top',
-            fontColor: '#00C4B3',
-        },
-        legend: {
-            display: false,
-            position: 'top',
-            labels: {
-                boxWidth: 5,
-                usePointStyle: true,
+        maintainAspectRatio: false, // Allow chart height to be controlled by container/props
+        plugins: { // Use plugins object for title, legend, etc. in Chart.js v3+
+            title: {
+                display: false, // Kept false as per original
+                // text: 'Humidade do solo',
+                // position: 'top',
+                // fontColor: '#00C4B3', // Note: fontColor might be just 'color' in v3+
+            },
+            legend: {
+                display: false, // We are using a custom legend
+            },
+            tooltip: {
+                mode: 'index' as const, // Show tooltips for all datasets at that index
+                intersect: false,
             },
         },
         scales: {
-            xAxes: [{
-                distribution: 'linear',
-                type: 'time',
+            x: { // Use 'x' instead of 'xAxes' in v3+
+                type: 'time' as const, // Explicitly type as 'time'
                 time: {
-                    unit: 'day',
-                    unitStepSize: 1,
-                    //tooltipFormat: 'll'
+                    unit: 'day' as const,
+                    // tooltipFormat: 'MMM dd, yyyy HH:mm', // Example detailed format
                     displayFormats: {
-                        'millisecond': 'MMM DD',
-                        'second': 'MMM DD',
-                        'minute': 'MMM DD',
-                        'hour': 'MMM DD',
-                        'day': 'MMM DD',
-                        'week': 'MMM DD',
-                        'month': 'MMM DD',
-                        'quarter': 'MMM DD',
-                        'year': 'MMM DD',
+                        day: 'MMM dd' // Format for day unit
                     }
                 },
-                scaleLabel: {
+                title: { // Use 'title' for axis labels
                     display: true,
-                    //labelString: 'time'
+                    text: 'Date'
                 }
-            }],
-            yAxes: [{
-                scaleLabel: {
+            },
+            y: { // Use 'y' instead of 'yAxes' in v3+
+                beginAtZero: true, // Often useful for moisture data
+                title: {
                     display: true,
-                    //labelString: 'value'
+                    text: 'Moisture Value' // Example axis title
                 }
-            }]
-        }
+            }
+        },
+        interaction: { // Improves hover/tooltip behavior
+            mode: 'index' as const,
+            intersect: false,
+        },
+    }), []); // Empty dependency array as options are static here
+
+    // Callback for toggling visibility
+    const handleLegendToggle = useCallback((index: number) => {
+        setIsVisible(prev => {
+            const newState = [...prev];
+            newState[index] = !newState[index];
+            return newState;
+        });
+    }, []); // No dependencies needed for setIsVisible setter
+
+    // --- Render Logic ---
+    if (isLoading) {
+        return <div className="sensorview loading">Loading sensor data...</div>;
     }
 
-    if (response !== undefined) {
-        return (
-            <div className="sensorview">
+    if (error) {
+        return <div className="sensorview error">Error: {error}</div>;
+    }
+
+    if (!moistureData || moistureData.length === 0) {
+        return <div className="sensorview nodata">No moisture data available for the selected period.</div>;
+    }
+
+    // Prepare data objects for charts
+    const individualChartData = { datasets: chartDatasets };
+    const totalChartData = { datasets: sumChartDataset };
+
+    return (
+        <div className="sensorview">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                 <p className="title">Humidade do solo</p>
-                <img src={calendar} className="date-picker-icon" alt="date-icon" />
-                <Legend />
-                <Line
-                    data={data}
-                    options={options}
-                    width={1560}
-                    height={380}
-                />
-                <Line
-                    data={sumdata}
-                    options={options}
-                    width={1560}
-                    height={380}
-                />
+                {/* Consider making the calendar icon interactive for date picking */}
+                <img src={calendar} className="date-picker-icon" alt="date-icon" title="Date range" />
             </div>
-        );
-    }
-    else {
-        return (
-            <></>
-        )
-    }
+
+            {/* Pass only necessary info to CustomLegend */}
+            <CustomLegend
+                datasets={chartDatasets.map(ds => ({ label: ds.label, backgroundColor: ds.backgroundColor }))}
+                isVisible={isVisible}
+                onToggle={handleLegendToggle}
+            />
+
+            <div className="chart-container" style={{ height: '380px', width: '100%', marginBottom: '30px', position: 'relative' }}>
+                <Line data={individualChartData} options={chartOptions} />
+            </div>
+
+            <p className="title" style={{marginTop: '20px'}}>Total Humidade (Visível)</p>
+            <div className="chart-container" style={{ height: '380px', width: '100%', position: 'relative' }}>
+                <Line data={totalChartData} options={chartOptions} />
+            </div>
+        </div>
+    );
 }
+
 export default SensorView;

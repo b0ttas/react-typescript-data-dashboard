@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { Redirect } from 'react-router-dom';
-
-import useReactRouter from 'use-react-router';
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 
 import { SidebarComponent } from './components/Sidebar';
 import { AppContainer } from './components/AppContainer';
@@ -23,10 +20,9 @@ import AddAreaForm from './components/AddAreaForm';
 import EditAreaForm from './components/EditAreaForm';
 
 const TopNav = () => {
+    const location = useLocation();
     let addPath;
     let object = ["", ""];
-    const { location } = useReactRouter();
-
 
     if (location.pathname === "/areas") {
         object = ["Áreas", "/areas"];
@@ -119,7 +115,7 @@ const App = () => {
 
     return (
         <div className="App">
-            <Router>
+            <BrowserRouter>
                 <div className="topnav">
                     <span onClick={() => setVisible(!isVisible)} id="menu-span">&#9776;</span>
                     <Link to="/" id="brand"><img src={brand} className="App-brand" alt="brand" /></Link>
@@ -132,18 +128,28 @@ const App = () => {
                 </SidebarComponent>
 
                 <AppContainer isVisible={isVisible}>
-                    <Switch>
-                        <Route exact path="/" component={Landing} />
-                        <Route path="/404" component={Page404} />
-                        <Route exact path="/areas" component={Areas} />
-                        <Route path="/areas/add" component={AreasAdd} />
-                        <Route path="/areas/edit" component={AreasEdit} />
-                        <Route exact path="/sensores" component={Sensores} />
-                        <Route path="/sensores/view" component={SensoresView} />
-                        <Redirect from="*" to="/404" />
-                    </Switch>
+                    <Routes>
+                        <Route path="/" element={<Landing />} />
+                        <Route path="/404" element={<Page404 />} />
+
+                        {/* Areas Routes */}
+                        <Route path="/areas">
+                            <Route index element={<Areas />} />
+                            <Route path="add" element={<AreasAdd />} />
+                            <Route path="edit/:id" element={<AreasEdit />} />
+                        </Route>
+
+                        {/* Sensores Routes */}
+                        <Route path="/sensores">
+                            <Route index element={<Sensores />} />
+                            <Route path="view/:id" element={<SensoresView />} />
+                        </Route>
+
+                        {/* Catch-all redirect */}
+                        {/*<Route path="*" element={<Navigate to="/404" replace />} />*/}
+                    </Routes>
                 </AppContainer>
-            </Router>
+            </BrowserRouter>
         </div>
     );
 }
