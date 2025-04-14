@@ -45,6 +45,7 @@ The project uses the following technologies and tools:
 - **Typescript**: For static typing and improved developer experience.
 - **SCSS**: For styling, leveraging variables, mixins, and nested rules.
 - **HTML & CSS**: For markup and additional styling.
+- **json-server**: To serve mock data to the application.
   
 ## License
 
