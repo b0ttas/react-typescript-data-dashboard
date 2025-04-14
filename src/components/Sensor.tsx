@@ -17,8 +17,8 @@ function Sensor(props: Props) {
     return (
         <Link to={{ pathname: `/sensores/view/${props.deviceUID}`}}>
             <div className="sensor">
-                <span id="title">{props.deviceUID}</span>
-                <span id="content">{props.areaName} - {props.areaCulture}</span>
+                <span id="title">{props.areaName}</span>
+                <span id="content">{props.deviceUID} - {props.areaCulture}</span>
                 <img id="spacer" src={ItemSpacer} alt=""></img>
                 <span id="options">
                     {/*

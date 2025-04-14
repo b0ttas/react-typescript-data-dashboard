@@ -1,11 +1,25 @@
 {
   "areas": [
     {
-      "id": "4",
-      "name": "this is messed up 2",
-      "crop": "banana",
-      "area": 55,
+      "id": "0ff4",
+      "name": "Caldas 1",
+      "crop": "Uvas",
+      "area": 200,
       "device": "1"
+    },
+    {
+      "id": "9d2f",
+      "name": "Viseu 1",
+      "crop": "Milho",
+      "area": 10,
+      "device": "2"
+    },
+    {
+      "id": "568b",
+      "name": "Alverca 1",
+      "crop": "Batata",
+      "area": 1,
+      "device": "3"
     }
   ],
   "devices": [
@@ -54,7 +68,7 @@
       "deviceID": "1",
       "timestamp": 1684154400000,
       "S1T": 40.2,
-      "S2T": 38.0,
+      "S2T": 38,
       "S3T": 36.5,
       "S4T": 34.1,
       "unit": "%"
@@ -64,7 +78,7 @@
       "timestamp": 1684147200000,
       "S1T": 35.7,
       "S2T": 34.2,
-      "S3T": 33.0,
+      "S3T": 33,
       "S4T": 31.5,
       "unit": "%"
     },
@@ -73,7 +87,7 @@
       "timestamp": 1684147200000,
       "S1T": 35.7,
       "S2T": 34.2,
-      "S3T": 33.0,
+      "S3T": 33,
       "S4T": 31.5,
       "unit": "%"
     }

@@ -38,6 +38,7 @@ function SensorList() {
         <div>
             {devices.map(device =>
                 <Sensor key={device.id} deviceUID={device.id}
+                        areaName={device.name} areaCulture={device.type}
                 />
             )}
         </div>);

@@ -5,21 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53c1550b-ae6e-4802-a211-098d14600954" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/db.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/AddAreaForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddAreaForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Area.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Area.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/EditAreaForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EditAreaForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Sensor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sensor.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/SensorList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SensorList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SensorView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SensorView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/deviceAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/deviceAPI.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/restAPI.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/restAPI.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/AppStyle.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/AppStyle.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/SensorView.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/SensorView.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/AreaForm.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/AreaForm.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +94,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1744371064264</updated>
-      <workItem from="1744371065315" duration="9618000" />
+      <workItem from="1744371065315" duration="15464000" />
     </task>
     <servers />
   </component>
@@ -178,6 +172,18 @@
           <line>32</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/AddAreaForm.tsx</url>
+          <line>1</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/EditAreaForm.tsx</url>
+          <line>83</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

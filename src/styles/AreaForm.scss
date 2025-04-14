@@ -1,109 +1,143 @@
-.areaform{
-    width: 960px;
-    height: 166px;
-    background: rgb(255, 255, 255);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14);
-    border-radius: 2px;
-    margin-top: 16px;
-    margin-left: unset;
-    text-align: unset;
-    font-size:20px;
+$form-width: 960px;
+$form-background: rgb(255, 255, 255);
+$form-shadow: 0 2px 2px rgba(0, 0, 0, 0.14);
+$form-border-radius: 2px;
+$base-font-size: 20px;
+$input-margin-top: 10px;
+$underline-color: rgba(0, 0, 0, 0.3);
+$underline-height: 2px;
+$primary-action-color: #00C4B3;
+$button-text-color: #ffffff;
+$button-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.2);
+$field-group-width: 400px;
+$options-margin-top: 20px;
+$cancel-link-font-size: 16px;
+$cancel-link-margin-right: 25px;
 
-        select {
-            font-size: 20px;  
-            width: 100%;
-            border: none;  
-            margin-top: 10px;
-        }
-        
-        select:invalid { 
-            color: gray; 
-        }
+.areaForm {
+  width: $form-width;
+  background: $form-background;
+  box-shadow: $form-shadow;
+  border-radius: $form-border-radius;
+  margin-top: 16px;
+  margin-left: unset;
+  text-align: unset;
+  font-size: $base-font-size;
 
-        form {
-            margin: 20px auto;
-            display: grid;
-            padding-bottom: 30px;
-        }
-        
-        fieldset {
-            position: relative;
-            border: none;  
-            display: flex;
-            width: 400px;
-        }
-      
-      input {
-        font-size: 20px;  
-        width: 100%;
-        border: none;  
-        margin-top: 10px;
-      }
-      
-      input:focus {
-        outline: none;
-      }
-      
-      .after {
-        width: 100%;
-        height: 2px;
-        background-color: rgba(0, 0, 0, 0.3);
-        background-size: 200% 100%;
-        background-position: 100% 0;
-      }
-
-      button {
-        margin-right: 10px;
-      }
-}
-
-#left {
-  float: left;
-}
-
-#right {
-  float: right;
-}
-
-#line {
-  width: auto;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
-}
-
-#cancel {
-  margin-right: 20px;
-}
-
-#save {
-  border: none;
-  border-radius: 2px;
-  padding: 8px 20px;
-  background: #00C4B3;
-  color: #ffffff;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.15), 0px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-
-.options {
-  float: right;
-  margin-top: 20px;
-  margin-right: 0px;
-  margin-left: auto;
-
-  a{
-    font-size: 16px;
-    margin-right: 25px;
-    line-height: 20px;
-    text-decoration: none;
-    color: #00C4B3;
-    font-style: normal;
-    font-weight: normal;
+  form {
+    margin: 20px auto;
+    padding-bottom: 30px;
   }
-}
 
-#cancel:hover {
-    text-decoration: underline;
-  
+  .form-row {
+    width: auto;
+    padding: 10px 10px 0;
+    margin-bottom: 10px;
+
+    &::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+
+  // Style for field groups corresponding to #left/#right fieldsets
+  .form-field-group {
+    border: none;
+    width: $field-group-width;
+    margin-bottom: 15px;
+
+    // Apply float based on ID (IDs #left/#right)
+    &#left {
+      float: left;
+    }
+    &#right {
+      float: right;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8em;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      font-size: $base-font-size;
+      width: 100%;
+      border: none;
+      margin-top: $input-margin-top;
+      padding-bottom: $underline-height + 2px;
+      border-bottom: $underline-height solid $underline-color;
+      background-color: transparent;
+
+      &:focus {
+        outline: none;
+        border-bottom-color: $primary-action-color;
+      }
+    }
+
+    select {
+      font-size: $base-font-size;
+      width: 100%;
+      border: none;
+      margin-top: $input-margin-top;
+      padding-bottom: $underline-height + 2px;
+      border-bottom: $underline-height solid $underline-color;
+      background-color: transparent;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        border-bottom-color: $primary-action-color;
+      }
+
+      &:invalid {
+        color: gray;
+      }
+    }
+  }
+
+  // Options / Actions Area
+  .options.form-actions {
+    float: right;
+    margin-top: $options-margin-top;
+    margin-right: 10px;
+
+    .button {
+      margin-left: 10px;
+    }
+
+    a.button.cancel-button {
+      font-size: $cancel-link-font-size;
+      margin-right: $cancel-link-margin-right;
+      line-height: 20px;
+      text-decoration: none;
+      color: $primary-action-color;
+      font-style: normal;
+      font-weight: normal;
+      background: none;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      vertical-align: middle;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    // Save Button Styling
+    button.button.save-button {
+      border: none;
+      border-radius: $form-border-radius;
+      padding: 8px 20px;
+      background: $primary-action-color;
+      color: $button-text-color;
+      box-shadow: $button-shadow;
+      font-size: $base-font-size * 0.8;
+      font-weight: bold;
+    }
+  }
 }

@@ -9,6 +9,13 @@ PUT    /employees/{id}
 PATCH  /employees/{id}
 DELETE /employees/{id}
 */
+interface AreaFormData {
+    id?: string;
+    name?: string;
+    area?: number;
+    crop?: string;
+    device?: string;
+}
 
 export async function fetchDB() {
     const r = await fetch(apiUrl, {
@@ -18,7 +25,7 @@ export async function fetchDB() {
     return await r.json();
 }
 
-export async function fetchIdDB(data: string) {
+export async function fetchIdDB(data: string | undefined) {
     const r = await fetch(apiUrl + "/" + data, {
         method: "GET",
         headers: {'Content-Type': 'application/json'}
@@ -45,12 +52,12 @@ export async function postDB(data: { id: null, name: string, crop: string, area:
     return await r.json();
 }
 
-export async function patchDB(data: { id: string, name: string, crop: string, area: string, device: string }) {
+export async function patchDB(data: AreaFormData) {
 
     //patch - update atribute, put - update resource
 
     let temp = {
-        "id": Number(data.id),
+        "id": data.id,
         "name": data.name,
         "crop": data.crop,
         "area": Number(data.area),
